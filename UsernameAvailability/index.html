@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto Refresh</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write("<script src='jquery-3.3.1.js'><\/script>");
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#username').blur(function () {
+                var username = $(this).val();
+                if ($.trim(username) != null) {
+                    $.ajax({
+                        url: 'check.php',
+                        method: 'POST',
+                        data: {user_name: username},
+                        dataType: 'text',
+                        success: function (ht) {
+                            $('#availability').html(ht);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<br>
+<!--<form action="check.php" method="post">-->
+    <div>User Name</div>
+    <input type="text" name="username" id="username">
+    <span id="availability"></span>
+    <!--<button type="button" id="btn_tweet" name="btn_tweet">Show</button>-->
+<!--</form>-->
+<br>
+<br>
+</body>
+</html>

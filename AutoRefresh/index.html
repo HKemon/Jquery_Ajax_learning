@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto Refresh</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write("<script src='jquery-3.3.1.js'><\/script>");
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#btn_tweet').click(function () {
+                var tweet_text = $('#tweet').val();
+                if ($.trim(tweet_text) != null) {
+                    $.ajax({
+                        url: 'insert.php',
+                        method: 'POST',
+                        data: {tweet: tweet_text},
+                        dataType: 'text',
+                        success: function () {
+                            $('#tweet').val("something ...");
+                        }
+                    });
+                    setInterval(function () {
+                        $('#load_tweet').load('fetch.php').fadeIn('slow');
+                    },1000);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<br>
+<form action="insert.php" method="post">
+    <textarea name="tweet" id="tweet"></textarea>
+    <button type="button" id="btn_tweet" name="btn_tweet">Show</button>
+</form>
+<br>
+<br>
+<div id="load_tweet"></div>
+</body>
+</html>
